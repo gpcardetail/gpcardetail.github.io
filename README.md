@@ -23,4 +23,3 @@ Nuestro objetivo es ofrecer a cada vehículo un acabado impecable, cuidando cada
 
 El sitio web está desarrollado en **HTML5**, **CSS3** y **JavaScript puro**, optimizado para GitHub Pages.
 
-Estructura:

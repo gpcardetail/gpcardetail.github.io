@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GP Car Detail – Lugo</title>
+    <meta name="description" content="Lavado y detailing profesional de vehículos en Lugo. Tratamiento cerámico, limpieza de motor y tapicería. Desde 35€.">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark: #111;
+            --grey: #1a1a1a;
+            --mid: #2a2a2a;
+            --accent: #0d9cf0;
+            --accent2: #0578c8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--black); color: #fff; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; height: 64px;
+            background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 4px; color: #fff; text-decoration: none; }
+        .logo span { color: var(--accent); }
+        nav ul { display: flex; gap: 30px; list-style: none; }
+        nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+        nav a:hover { color: var(--accent); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; background: none; border: none; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: #fff; transition: all 0.3s; }
+
+        /* ── HERO ── */
+        #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .slide {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1.2s ease;
+        }
+        .slide::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.65) 100%);
+        }
+        .slide.active { opacity: 1; }
+        .hero-content {
+            position: absolute; bottom: 14%; left: 8%; z-index: 5; max-width: 700px;
+        }
+        .hero-tag {
+            display: inline-block; padding: 4px 14px; background: var(--accent); color: #fff;
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 18px; border-radius: 2px;
+        }
+        .hero-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.0;
+            letter-spacing: 2px; color: #fff; margin-bottom: 24px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+        .btn-primary {
+            display: inline-block; padding: 14px 32px; background: var(--accent); color: #fff;
+            text-decoration: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;
+            border-radius: 3px; transition: background 0.2s, transform 0.15s;
+        }
+        .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+        .slider-dots {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 10; display: flex; gap: 10px;
+        }
+        .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255,255,255,0.3); cursor: pointer;
+            transition: background 0.3s, transform 0.3s; border: none;
+        }
+        .dot.active { background: var(--accent); transform: scale(1.3); }
+
+        /* ── STATS ── */
+        .stats-bar {
+            background: var(--accent); padding: 20px 40px;
+            display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+        }
+        .stat { text-align: center; }
+        .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #fff; display: block; }
+        .stat-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+
+        /* ── GENERIC SECTION ── */
+        .section-wrap { padding: 80px 40px; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block; }
+        h2.section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3rem); color: #fff; margin-bottom: 20px; letter-spacing: 2px; }
+        .section-p { color: rgba(255,255,255,0.65); line-height: 1.8; font-size: 1rem; max-width: 560px; }
+
+        /* ── SERVICIOS ── */
+        .servicios-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1px; background: var(--mid); margin-top: 50px; border: 1px solid var(--mid);
+        }
+        .servicio-card { background: var(--dark); padding: 40px 30px; transition: background 0.25s; }
+        .servicio-card:hover { background: var(--grey); }
+        .servicio-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+        .servicio-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 2px; color: #fff; margin-bottom: 10px; }
+        .servicio-card p { color: rgba(255,255,255,0.55); font-size: 0.9rem; line-height: 1.7; }
+
+        /* ── GALERÍA ── */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 6px; margin-top: 40px;
+        }
+        .gallery-grid img {
+            width: 100%; height: 280px; object-fit: cover; display: block;
+            transition: transform 0.4s, filter 0.4s; filter: saturate(0.85);
+        }
+        .gallery-grid img:hover { transform: scale(1.03); filter: saturate(1.1); }
+        .gallery-grid .featured { grid-column: span 2; height: 380px; }
+
+        /* ── PRECIOS ── */
+        .precios-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px; margin-top: 50px;
+        }
+        .precio-card {
+            border: 1px solid var(--mid); padding: 36px 28px;
+            transition: border-color 0.3s, transform 0.2s; position: relative;
+        }
+        .precio-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+        .precio-card.featured {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(13,156,240,0.07) 0%, transparent 60%);
+        }
+        .precio-tag {
+            position: absolute; top: -1px; right: 20px; background: var(--accent);
+            color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+            padding: 3px 10px; text-transform: uppercase;
+        }
+        .precio-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 8px; }
+        .precio-card .price { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--accent); letter-spacing: 2px; line-height: 1; }
+        .precio-card .price span { font-size: 1rem; color: rgba(255,255,255,0.5); }
+        .precio-card ul { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .precio-card ul li { font-size: 0.88rem; color: rgba(255,255,255,0.6); padding-left: 16px; position: relative; }
+        .precio-card ul li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; }
+        .precios-nota { text-align: center; margin-top: 30px; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+        /* ── CONTACTO ── */
+        .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .contacto-grid p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 30px; }
+        .contact-item { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; color: rgba(255,255,255,0.8); font-size: 0.95rem; }
+        .social-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+        .social-btn {
+            display: inline-flex; align-items: center; padding: 10px 18px; text-decoration: none;
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; border-radius: 3px;
+            transition: opacity 0.2s, transform 0.15s; text-transform: uppercase;
+        }
+        .social-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+        .social-btn.wa { background: #25d366; color: #fff; }
+        .social-btn.ig { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+        .social-btn.fb { background: #1877f2; color: #fff; }
+        .social-btn.tt { background: #010101; color: #fff; border: 1px solid #333; }
+        .social-btn.yt { background: #ff0000; color: #fff; }
+
+        footer {
+            background: var(--dark); border-top: 1px solid var(--mid);
+            text-align: center; padding: 24px; color: rgba(255,255,255,0.3); font-size: 0.8rem;
+        }
+        footer span { color: var(--accent); }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width: 900px) {
+            header { padding: 0 20px; }
+            nav { display: none; }
+            .hamburger { display: flex; }
+            nav.open {
+                display: block; position: fixed; top: 64px; left: 0; right: 0;
+                background: rgba(10,10,10,0.97); padding: 20px;
+            }
+            nav.open ul { flex-direction: column; gap: 20px; align-items: center; }
+            .stats-bar { gap: 30px; padding: 20px; }
+            .section-wrap { padding: 60px 20px; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-grid .featured { grid-column: span 2; }
+            .contacto-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero-content { left: 5%; right: 5%; }
+        }
+        @media(max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-grid .featured { grid-column: span 1; height: 260px; }
+            .gallery-grid img { height: 220px; }
+            .precios-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <a href="#inicio" class="logo">GP <span>CAR</span> DETAIL</a>
+    <nav id="main-nav">
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#galeria">Galería</a></li>
+            <li><a href="#precios">Precios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" onclick="toggleNav()" aria-label="Menú">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<!-- HERO -->
+<div id="hero">
+    <div class="slide active" style="background-image:url('img/slide1.jpg')"></div>
+    <div class="slide" style="background-image:url('img/slide2.jpg')"></div>
+    <div class="slide" style="background-image:url('img/slide3.jpg')"></div>
+    <div class="hero-content">
+        <div class="hero-tag">Lugo · Detailing Profesional</div>
+        <h2>Tu coche<br>merece lo mejor</h2>
+        <a href="https://wa.me/+34632344768" target="_blank" class="btn-primary">Pedir cita por WhatsApp</a>
+    </div>
+    <div class="slider-dots">
+        <button class="dot active" onclick="goSlide(0)"></button>
+        <button class="dot" onclick="goSlide(1)"></button>
+        <button class="dot" onclick="goSlide(2)"></button>
+    </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Coches tratados</span></div>
+    <div class="stat"><span class="stat-num">35€</span><span class="stat-label">Desde</span></div>
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Satisfacción</span></div>
+    <div class="stat"><span class="stat-num">Lugo</span><span class="stat-label">Rúa do Prado, 2</span></div>
+</div>
+
+<!-- INICIO -->
+<div id="inicio" class="section-wrap">
+    <div class="section-inner">
+        <span class="section-label">Bienvenido</span>
+        <h2 class="section-title">Detailing de nivel<br>a precio real</h2>
+        <p class="section-p">En GP Car Detail trabajamos cada vehículo con los mejores productos del mercado y atención al detalle en cada milímetro. Lavado exterior, interior, cerámica y mucho más — todo en un mismo sitio, en el centro de Lugo.</p>
+    </div>
+</div>
+
+<!-- SERVICIOS -->
+<div id="servicios" style="background:var(--dark);" class="section-wrap">
+    <div class="section-inner">
+        <span class="section-label">Lo que hacemos</span>
+        <h2 class="section-title">Servicios</h2>
+        <div class="servicios-grid">
+            <div class="servicio-card">
+                <span class="servicio-icon">🫧</span>
+                <h3>Lavado Exterior</h3>
+                <p>Foam cannon, decontaminación de pintura y secado a mano. Sin marcas, sin rozaduras.</p>
+            </div>
+            <div class="servicio-card">
+                <span class="servicio-icon">🧽</span>
+                <h3>Limpieza Interior</h3>
+                <p>Aspirado profundo, limpieza de plásticos, alfombras y techo. Interior como nuevo.</p>
+            </div>
+            <div class="servicio-card">
+                <span class="servicio-icon">🪑</span>
+                <h3>Tapicería</h3>
+                <p>Extracción de manchas y limpieza de asientos de tela o cuero con productos específicos.</p>
+            </div>
+            <div class="servicio-card">
+                <span class="servicio-icon">💎</span>
+                <h3>Tratamiento Cerámico</h3>
+                <p>Protección duradera para la pintura. Hidrofobicidad, brillo y resistencia a la suciedad.</p>
+            </div>
+            <div class="servicio-card">
+                <span class="servicio-icon">⚙️</span>
+                <h3>Limpieza de Motor</h3>
+                <p>Desengrasado profesional del compartimento del motor. Seguro y efectivo.</p>
+            </div>
+            <div class="servicio-card">
+                <span class="servicio-icon">✨</span>
+                <h3>Pulido y Abrillantado</h3>
+                <p>Eliminación de arañazos superficiales, oxidación y hologramas. Pintura recuperada.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- GALERÍA -->
+<div id="galeria" class="section-wrap">
+    <div class="section-inner">
+        <span class="section-label">Nuestro trabajo</span>
+        <h2 class="section-title">Galería</h2>
+        <div class="gallery-grid">
+            <img src="img/g1.jpg" class="featured" alt="Audi A4 Allroad detailing Lugo" loading="lazy">
+            <img src="img/g4.jpg" alt="Audi A4 blanca lavado profesional" loading="lazy">
+            <img src="img/g2.jpg" alt="SEAT Ateca detailing Lugo" loading="lazy">
+            <img src="img/g3.jpg" alt="SEAT Ateca tras lavado" loading="lazy">
+            <img src="img/g5.jpg" alt="SEAT León negro GP Car Detail" loading="lazy">
+        </div>
+    </div>
+</div>
+
+<!-- PRECIOS -->
+<div id="precios" style="background:var(--dark);" class="section-wrap">
+    <div class="section-inner">
+        <span class="section-label">Tarifas</span>
+        <h2 class="section-title">Precios</h2>
+        <div class="precios-grid">
+            <div class="precio-card">
+                <h3>Lavado Exterior</h3>
+                <div class="price">20€ <span>desde</span></div>
+                <ul>
+                    <li>Foam + enjuague</li>
+                    <li>Secado a mano</li>
+                    <li>Cristales exteriores</li>
+                    <li>Llantas limpias</li>
+                </ul>
+            </div>
+            <div class="precio-card">
+                <h3>Lavado Interior</h3>
+                <div class="price">25€ <span>desde</span></div>
+                <ul>
+                    <li>Aspirado completo</li>
+                    <li>Limpieza de plásticos</li>
+                    <li>Alfombras y tapetes</li>
+                    <li>Cristales interiores</li>
+                </ul>
+            </div>
+            <div class="precio-card featured">
+                <div class="precio-tag">Popular</div>
+                <h3>Detallado Completo</h3>
+                <div class="price">50€ <span>desde</span></div>
+                <ul>
+                    <li>Exterior + Interior</li>
+                    <li>Pulido de pintura</li>
+                    <li>Acondicionamiento de cuero</li>
+                    <li>Protección de pintura</li>
+                </ul>
+            </div>
+            <div class="precio-card">
+                <h3>Tratamiento Cerámico</h3>
+                <div class="price">— <span>consultar</span></div>
+                <ul>
+                    <li>Presupuesto personalizado</li>
+                    <li>Protección larga duración</li>
+                    <li>Brillo extremo</li>
+                    <li>Hidrofobicidad total</li>
+                </ul>
+            </div>
+        </div>
+        <p class="precios-nota">Precios orientativos. El precio final depende del vehículo y estado. Pide presupuesto sin compromiso.</p>
+    </div>
+</div>
+
+<!-- CONTACTO -->
+<div id="contacto" class="section-wrap">
+    <div class="section-inner">
+        <div class="contacto-grid">
+            <div>
+                <span class="section-label">Dónde encontrarnos</span>
+                <h2 class="section-title">Contacto</h2>
+                <p>¿Tienes dudas o quieres pedir cita? Escríbenos por WhatsApp o visítanos en el taller. Estamos en el centro de Lugo y atendemos sin esperas.</p>
+                <div class="contact-item"><span>📍</span><span>Rúa do Prado 2, 27004 Lugo</span></div>
+                <div class="contact-item"><span>📞</span><a href="tel:+34632344768" style="color:inherit;text-decoration:none;">632 344 768</a></div>
+                <div class="social-links">
+                    <a href="https://wa.me/+34632344768" target="_blank" class="social-btn wa">WhatsApp</a>
+                    <a href="https://www.instagram.com/gp_car_detail" target="_blank" class="social-btn ig">Instagram</a>
+                    <a href="https://www.facebook.com/juanillo.puigvelasco" target="_blank" class="social-btn fb">Facebook</a>
+                    <a href="https://www.tiktok.com/@gpcardetail1" target="_blank" class="social-btn tt">TikTok</a>
+                    <a href="https://youtube.com/@gpcardetail" target="_blank" class="social-btn yt">YouTube</a>
+                </div>
+            </div>
+            <div>
+                <iframe
+                    src="https://maps.google.com/maps?q=Rua+do+Prado+2+Lugo+Spain&output=embed"
+                    width="100%" height="340"
+                    style="border:0;border-radius:2px;filter:grayscale(0.5) contrast(1.1);"
+                    allowfullscreen loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 <span>GP Car Detail</span> · Rúa do Prado 2, Lugo · 632 344 768</p>
+</footer>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let current = 0, timer;
+
+    function goSlide(n) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = n;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        clearInterval(timer);
+        timer = setInterval(nextSlide, 5000);
+    }
+
+    function nextSlide() { goSlide((current + 1) % slides.length); }
+    timer = setInterval(nextSlide, 5000);
+
+    function toggleNav() {
+        document.getElementById('main-nav').classList.toggle('open');
+    }
+    document.querySelectorAll('nav a').forEach(a => {
+        a.addEventListener('click', () => document.getElementById('main-nav').classList.remove('open'));
+    });
+</script>
+</body>
+</html>

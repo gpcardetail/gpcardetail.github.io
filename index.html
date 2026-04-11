@@ -3,134 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GP CAR DETAIL</title>
-    <meta name="description" content="Lavado y detailing profesional de coches">
+    <title>GP Car Detail – Lugo</title>
+    <meta name="description" content="Lavado y detailing profesional de vehículos en Lugo. Tratamiento cerámico, limpieza de motor y tapicería. Desde 35€.">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Arial', sans-serif; }
-        body { background-color: #f5f5f5; color: #222; }
+        :root {
+            --black: #0a0a0a;
+            --dark: #111;
+            --grey: #1a1a1a;
+            --mid: #2a2a2a;
+            --accent: #0d9cf0;
+            --accent2: #0578c8;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--black); color: #fff; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
-        header { background-color: #111; color:#fff; padding:20px 0; text-align:center; }
-        header h1 { font-size:2rem; letter-spacing:2px; }
+        /* HEADER */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; height: 64px;
+            background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 4px; }
+        .logo span { color: var(--accent); }
+        nav ul { display: flex; gap: 30px; list-style: none; }
+        nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+        nav a:hover { color: var(--accent); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; background: none; border: none; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: #fff; }
 
-        nav { background-color: #222; position: sticky; top:0; z-index: 10; }
-        nav ul { display:flex; justify-content:center; list-style:none; flex-wrap:wrap; }
-        nav li { margin:0 15px; }
-        nav a { color:#fff; text-decoration:none; font-weight:bold; padding:10px 5px; display:block; transition: color 0.3s; }
-        nav a:hover { color:#1db954; }
+        /* HERO */
+        #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease; }
+        .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.65) 100%); }
+        .slide.active { opacity: 1; }
+        .hero-content { position: absolute; bottom: 14%; left: 8%; z-index: 5; max-width: 700px; }
+        .hero-tag { display: inline-block; padding: 4px 14px; background: var(--accent); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px; border-radius: 2px; }
+        .hero-content h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.0; letter-spacing: 2px; color: #fff; margin-bottom: 24px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .btn-primary { display: inline-block; padding: 14px 32px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; border-radius: 3px; transition: background 0.2s, transform 0.15s; }
+        .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+        .slider-dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 10px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s, transform 0.3s; border: none; }
+        .dot.active { background: var(--accent); transform: scale(1.3); }
 
-        /* Slider */
-        #slider { position:relative; width:100%; height:60vh; overflow:hidden; }
-        .slide { position:absolute; top:0; left:0; width:100%; height:100%; background-size:cover; background-position:center; display:flex; justify-content:center; align-items:center; transition: opacity 1s; opacity:0; }
-        .slide.active { opacity:1; }
-        .slide-content { text-align:center; color:#fff; background: rgba(0,0,0,0.5); padding:20px; border-radius:10px; }
-        .slide-content h2 { font-size:2rem; margin-bottom:10px; }
-        .slide-content a { display:inline-block; margin-top:10px; padding:10px 20px; background:#1db954; color:#fff; text-decoration:none; border-radius:5px; font-weight:bold; transition: background 0.3s; }
-        .slide-content a:hover { background:#14833b; }
+        /* STATS */
+        .stats-bar { background: var(--accent); padding: 20px 40px; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #fff; display: block; }
+        .stat-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.8); }
 
-        section { padding:60px 20px; max-width:1200px; margin:0 auto; }
-        section h2 { text-align:center; margin-bottom:30px; font-size:2rem; color:#111; }
-        section p { text-align:center; margin-bottom:15px; line-height:1.6; }
+        /* SECTIONS */
+        .section-wrap { padding: 80px 40px; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block; }
+        h2.section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3rem); color: #fff; margin-bottom: 20px; letter-spacing: 2px; }
+        .section-p { color: rgba(255,255,255,0.65); line-height: 1.8; font-size: 1rem; max-width: 560px; }
 
-        /* Responsive */
-        @media(max-width:768px){ .slide-content h2{ font-size:1.5rem; padding:15px; } }
+        /* SERVICIOS */
+        .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--mid); margin-top: 50px; border: 1px solid var(--mid); }
+        .servicio-card { background: var(--dark); padding: 40px 30px; transition: background 0.25s; }
+        .servicio-card:hover { background: var(--grey); }
+        .servicio-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+        .servicio-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 2px; color: #fff; margin-bottom: 10px; }
+        .servicio-card p { color: rgba(255,255,255,0.55); font-size: 0.9rem; line-height: 1.7; }
+
+        /* GALERÍA */
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 40px; }
+        .gallery-grid img { width: 100%; height: 280px; object-fit: cover; display: block; transition: transform 0.4s, filter 0.4s; filter: saturate(0.85); }
+        .gallery-grid img:hover { transform: scale(1.03); filter: saturate(1.1); }
+        .gallery-grid .featured { grid-column: span 2; height: 380px; }
+
+        /* PRECIOS */
+        .precios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 50px; }
+        .precio-card { border: 1px solid var(--mid); padding: 36px 28px; transition: border-color 0.3s, transform 0.2s; position: relative; }
+        .precio-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+        .precio-card.featured { border-color: var(--accent); background: linear-gradient(135deg, rgba(13,156,240,0.07) 0%, transparent 60%); }
+        .precio-tag { position: absolute; top: -1px; right: 20px; background: var(--accent); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; padding: 3px 10px; text-transform: uppercase; }
+        .precio-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 8px; }
+        .precio-card .price { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--accent); letter-spacing: 2px; line-height: 1; }
+        .precio-card .price span { font-size: 1rem; color: rgba(255,255,255,0.5); }
+        .precio-card ul { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .precio-card ul li { font-size: 0.88rem; color: rgba(255,255,255,0.6); padding-left: 16px; position: relative; }
+        .precio-card ul li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; }
+
+        /* CONTACTO */
+        .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .contacto-grid p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 30px; }
+        .contact-item { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; color: rgba(255,255,255,0.8); }
+        .social-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+        .social-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; text-decoration: none; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; border-radius: 3px; transition: opacity 0.2s, transform 0.15s; text-transform: uppercase; }
+        .social-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+        .social-btn.fb { background: #1877f2; color: #fff; }
+        .social-btn.wa { background: #25d366; color: #fff; }
+        .social-btn.ig { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+        .social-btn.yt { background: #ff0000; color: #fff; }
+        .social-btn.tt { background: #010101; color: #fff; border: 1px solid #333; }
+
+        footer { background: var(--dark); border-top: 1px solid var(--mid); text-align: center; padding: 24px; color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+        footer span { color: var(--accent); }
+
+        @media(max-width: 900px) {
+            header { padding: 0 20px; }
+            nav { display: none; }
+            .hamburger { display: flex; }
+            nav.open { display: block; position: fixed; top: 64px; left: 0; right: 0; background: rgba(10,10,10,0.97); padding: 20px; }
+            nav.open ul { flex-direction: column; gap: 20px; align-items: center; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-grid .featured { grid-column: span 2; }
+            .contacto-grid { grid-template-columns: 1fr; gap: 40px; }
+            .stats-bar { gap: 30px; padding: 20px; }
+            .section-wrap { padding: 60px 20px; }
+        }
+        @media(max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-grid .featured { grid-column: span 1; height: 260px; }
+            .gallery-grid img { height: 220px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>GP CAR DETAIL</h1>
+    <div class="logo">GP <span>CAR</span> DETAIL</div>
+    <nav id="main-nav">
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#galeria">Galería</a></li>
+            <li><a href="#precios">Precios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menú">
+        <span></span><span></span><span></span>
+    </button>
 </header>
 
-<nav>
-    <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
-        <li><a href="#precios">Precios</a></li>
-    </ul>
-</nav>
-
-<!-- Slider -->
-<div id="slider">
-    <div class="slide active" style="background-image:url('https://primary.jwwb.nl/unsplash/Ng3xrviPrhk.jpg?fit=bounds&width=1920&height=1920');">
-        <div class="slide-content">
-            <h2>¡Siente el brillo en tu coche con nosotros!</h2>
-            <a href="#servicios">¡Reserva ahora!</a>
-        </div>
-    </div>
-    <div class="slide" style="background-image:url('https://primary.jwwb.nl/unsplash/tmAynVA_ihE.jpg?fit=bounds&width=1920&height=1920');">
-        <div class="slide-content">
-            <h2>Lavado profesional y detallado interior/exterior</h2>
-            <a href="#servicios">¡Reserva ahora!</a>
-        </div>
-    </div>
-    <div class="slide" style="background-image:url('https://primary.jwwb.nl/unsplash/gts_Eh4g1lk.jpg?fit=bounds&width=1920&height=1920');">
-        <div class="slide-content">
-            <h2>Cuidado completo para tu coche</h2>
-            <a href="#servicios">¡Reserva ahora!</a>
-        </div>
-    </div>
-</div>
-
-<!-- Secciones -->
-<section id="inicio">
-    <h2>Bienvenido a GP CAR DETAIL</h2>
-    <p>Ofrecemos los mejores servicios de lavado y detailing de coches en la ciudad. Tu coche se verá como nuevo después de visitarnos.</p>
-</section>
-
-<section id="servicios">
-    <h2>Servicios</h2>
-    <p>Lavado exterior, pulido, encerado, limpieza interior profunda, tratamiento de cuero y tapicería, protección de pintura.</p>
-</section>
-
-<section id="sobre-nosotros">
-    <h2>Sobre nosotros</h2>
-    <p>GP CAR DETAIL cuenta con profesionales apasionados por el cuidado del automóvil. Nos aseguramos de que cada coche reciba un trato de lujo.</p>
-</section>
-
-<section id="precios">
-    <h2>Precios</h2>
-    <p>Lavado exterior desde 20€, lavado interior desde 25€, detallado completo desde 50€. ¡Consulta nuestros packs y promociones!</p>
-</section>
-
-<script>
-    // Slider automático
-    const slides = document.querySelectorAll('.slide');
-    let current = 0;
-
-    function showSlide(index){
-        slides.forEach((slide,i)=>slide.classList.toggle('active', i===index));
-    }
-
-    setInterval(()=>{
-        current = (current+1)%slides.length;
-        showSlide(current);
-    },5000);
-</script>
-
-<nav>
-    <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
-        <li><a href="#precios">Precios</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-    </ul>
-</nav>
-
-<!-- ... resto de la página ... -->
-
-<section id="contacto">
-    <h2>Contacto</h2>
-    <p>Conéctate con nosotros fácilmente o visítanos:</p>
-    <div style="text-align:center; margin-top:20px;">
-        <a href="https://www.facebook.com/juanillo.puigvelasco" target="_blank" style="display:inline-block; margin:5px; padding:10px 20px; background:#3b5998; color:#fff; text-decoration:none; border-radius:5px; font-weight:bold;">Facebook</a>
-        <a href="https://wa.me/+34632344768" target="_blank" style="display:inline-block; margin:5px; padding:10px 20px; background:#25D366; color:#fff; text-decoration:none; border-radius:5px; font-weight:bold;">WhatsApp</a>
-        <a href="https://youtube.com/@gpcardetail" target="_blank" style="display:inline-block; margin:5px; padding:10px 20px; background:#FF0000; color:#fff; text-decoration:none; border-radius:5px; font-weight:bold;">YouTube</a>
-        <a href="https://www.instagram.com/gp_car_detail" target="_blank" style="display:inline-block; margin:5px; padding:10px 20px; background:#E1306C; color:#fff; text-decoration:none; border-radius:5px; font-weight:bold;">Instagram</a>
-        <a href="https://www.tiktok.com/@gpcardetail1" target="_blank" style="display:inline-block; margin:5px; padding:10px 20px; background:#010101; color:#fff; text-decoration:none; border-radius:5px; font-weight:bold;">TikTok</a>
-    </div>
-    <p style="text-align:center; margin-top:15px; font-weight:bold;">Rúa do Prado, 27004 Lugo</p>
-</section>
-</body>
-</html>
+<div id="hero">
+    <div class="slide active" style="background-image:url('data:image/jpeg;base64,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

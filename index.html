@@ -281,6 +281,16 @@
                 <h3>Pulido y Abrillantado</h3>
                 <p>Eliminación de arañazos superficiales, oxidación y hologramas. Pintura recuperada.</p>
             </div>
+            <div class="servicio-card">
+                <span class="servicio-icon">🎨</span>
+                <h3>Wrapping / Vinilado</h3>
+                <p>Cambio de color completo o parcial con vinilo de alta calidad. Protege la pintura original y transforma el aspecto del vehículo.</p>
+            </div>
+            <div class="servicio-card">
+                <span class="servicio-icon">💧</span>
+                <h3>Vinilo Líquido</h3>
+                <p>Recubrimiento extraíble en spray. Protección temporal con acabado profesional, fácil de retirar sin dañar la pintura.</p>
+            </div>
         </div>
     </div>
 </div>
@@ -347,6 +357,28 @@
                     <li>Hidrofobicidad total</li>
                 </ul>
             </div>
+            <!-- NUEVO: Wrapping -->
+            <div class="precio-card">
+                <h3>Wrapping / Vinilado</h3>
+                <div class="price">1.500€ <span>desde</span></div>
+                <ul>
+                    <li>Cambio de color completo</li>
+                    <li>Vinilo de alta calidad</li>
+                    <li>Protege la pintura original</li>
+                    <li>Acabado mate, satinado o brillo</li>
+                </ul>
+            </div>
+            <!-- NUEVO: Vinilo líquido -->
+            <div class="precio-card">
+                <h3>Vinilo Líquido</h3>
+                <div class="price">1.000€ <span>desde</span></div>
+                <ul>
+                    <li>Recubrimiento en spray</li>
+                    <li>100% extraíble sin daños</li>
+                    <li>Protección temporal premium</li>
+                    <li>Varios colores disponibles</li>
+                </ul>
+            </div>
         </div>
         <p class="precios-nota">Precios orientativos. El precio final depende del vehículo y estado. Pide presupuesto sin compromiso.</p>
     </div>
@@ -363,53 +395,4 @@
                 <div class="contact-item"><span>📍</span><span>Rúa do Prado 2, 27004 Lugo</span></div>
                 <div class="contact-item"><span>📞</span><a href="tel:+34632344768" style="color:inherit;text-decoration:none;">632 344 768</a></div>
                 <div class="social-links">
-                    <a href="https://wa.me/+34632344768" target="_blank" class="social-btn wa">WhatsApp</a>
-                    <a href="https://www.instagram.com/gp_car_detail" target="_blank" class="social-btn ig">Instagram</a>
-                    <a href="https://www.facebook.com/juanillo.puigvelasco" target="_blank" class="social-btn fb">Facebook</a>
-                    <a href="https://www.tiktok.com/@gpcardetail1" target="_blank" class="social-btn tt">TikTok</a>
-                    <a href="https://youtube.com/@gpcardetail" target="_blank" class="social-btn yt">YouTube</a>
-                </div>
-            </div>
-            <div>
-                <iframe
-                    src="https://maps.google.com/maps?q=Rua+do+Prado+2+Lugo+Spain&output=embed"
-                    width="100%" height="340"
-                    style="border:0;border-radius:2px;filter:grayscale(0.5) contrast(1.1);"
-                    allowfullscreen loading="lazy">
-                </iframe>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <p>© 2025 <span>GP Car Detail</span> · Rúa do Prado 2, Lugo · 632 344 768</p>
-</footer>
-
-<script>
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    let current = 0, timer;
-
-    function goSlide(n) {
-        slides[current].classList.remove('active');
-        dots[current].classList.remove('active');
-        current = n;
-        slides[current].classList.add('active');
-        dots[current].classList.add('active');
-        clearInterval(timer);
-        timer = setInterval(nextSlide, 5000);
-    }
-
-    function nextSlide() { goSlide((current + 1) % slides.length); }
-    timer = setInterval(nextSlide, 5000);
-
-    function toggleNav() {
-        document.getElementById('main-nav').classList.toggle('open');
-    }
-    document.querySelectorAll('nav a').forEach(a => {
-        a.addEventListener('click', () => document.getElementById('main-nav').classList.remove('open'));
-    });
-</script>
-</body>
-</html>
+                    <a href="https://wa.me/+34632344768" target="_blank" class="social-btn wa">WhatsA
